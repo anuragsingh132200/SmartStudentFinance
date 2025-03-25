@@ -72,7 +72,7 @@ export function AddIncomeForm({ open, onOpenChange }: AddIncomeFormProps) {
   const calculateFromHours = form.watch("calculateFromHours");
   const hourlyWage = form.watch("hourlyWage") || 0;
   const weeklyHours = form.watch("weeklyHours") || 0;
-  
+
   // Calculate monthly income from hourly wage and weekly hours
   const calculateMonthlyIncome = (hourlyWage: number, weeklyHours: number) => {
     return hourlyWage * weeklyHours * 4.33; // 4.33 weeks in a month on average
@@ -88,14 +88,13 @@ export function AddIncomeForm({ open, onOpenChange }: AddIncomeFormProps) {
 
   const createIncomeMutation = useMutation({
     mutationFn: async (values: IncomeFormValues) => {
-      // Omit the calculation fields before sending
-      const { hourlyWage, weeklyHours, calculateFromHours, ...incomeData } = values;
-      
-      const res = await apiRequest("POST", "/api/incomes", {
-        ...incomeData,
+      // Convert date string to ISO format for the API
+      const formattedData = {
+        ...values,
         userId: user?.id,
-        date: new Date(incomeData.date).toISOString(),
-      });
+        date: new Date(values.date).toISOString(),
+      };
+      const res = await apiRequest("POST", "/api/incomes", formattedData);
       return await res.json();
     },
     onSuccess: () => {
