@@ -32,7 +32,7 @@ interface AddExpenseFormProps {
 // Extend the expense schema with client validation
 const expenseFormSchema = insertExpenseSchema.extend({
   amount: z.coerce.number().min(0.01, "Amount must be greater than zero"),
-  date: z.string(),
+  date: z.string(), // Keep as string in the form
 });
 
 type ExpenseFormValues = z.infer<typeof expenseFormSchema>;
@@ -70,6 +70,7 @@ export function AddExpenseForm({ open, onOpenChange }: AddExpenseFormProps) {
 
   const createExpenseMutation = useMutation({
     mutationFn: async (values: ExpenseFormValues) => {
+      // Make sure the date is properly formatted as ISO string
       const res = await apiRequest("POST", "/api/expenses", {
         ...values,
         userId: user?.id,
