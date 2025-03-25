@@ -70,11 +70,10 @@ export function AddExpenseForm({ open, onOpenChange }: AddExpenseFormProps) {
 
   const createExpenseMutation = useMutation({
     mutationFn: async (values: ExpenseFormValues) => {
-      // Make sure the date is properly formatted as ISO string
+      // Just send the string date as is - the server will handle conversion
       const res = await apiRequest("POST", "/api/expenses", {
         ...values,
         userId: user?.id,
-        date: new Date(values.date).toISOString(),
       });
       return await res.json();
     },
