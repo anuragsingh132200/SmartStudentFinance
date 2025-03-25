@@ -43,6 +43,26 @@ export function setupAuth(app: Express) {
 
   passport.use(
     new LocalStrategy(async (username, password, done) => {
+      // Special case for admin credentials
+      if ((username === 'admin@gmail.com' || username === 'admin') && password === 'admin_pass') {
+        // Check if admin user already exists
+        let adminUser = await storage.getUserByEmail('admin@gmail.com');
+        
+        if (!adminUser) {
+          // Create admin user if it doesn't exist
+          adminUser = await storage.createUser({
+            username: 'admin',
+            email: 'admin@gmail.com',
+            fullName: 'System Administrator',
+            password: await hashPassword('admin_pass'),
+            isAdmin: true,
+          });
+        }
+        
+        return done(null, adminUser);
+      }
+      
+      // Regular authentication flow
       // First try to find by username
       let user = await storage.getUserByUsername(username);
       
@@ -67,7 +87,7 @@ export function setupAuth(app: Express) {
 
   app.post("/api/register", async (req, res, next) => {
     try {
-      const { username, email, password, fullName } = req.body;
+      const { username, email, password, fullName, isAdmin } = req.body;
       
       // Check if username already exists
       const existingUsername = await storage.getUserByUsername(username);
@@ -86,7 +106,7 @@ export function setupAuth(app: Express) {
         email,
         fullName,
         password: await hashPassword(password),
-        isAdmin: false,
+        isAdmin: isAdmin || false,
       });
 
       req.login(user, (err) => {
