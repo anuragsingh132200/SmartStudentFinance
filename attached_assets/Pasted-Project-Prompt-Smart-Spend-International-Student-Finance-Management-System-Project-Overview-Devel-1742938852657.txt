@@ -1,0 +1,107 @@
+Project Prompt: Smart Spend - International Student Finance Management System
+Project Overview
+Develop a Next.js web application with SQLite as the database and Prisma ORM for data management. The system will enable international students to track their income, expenses, budgets, and financial goals while incorporating community-driven financial tips and deal-sharing features.
+
+Key Features
+User Registration & Authentication
+
+Secure registration and authentication using NextAuth.js.
+
+Multi-Factor Authentication (MFA) using TOTP (Time-based One-Time Passwords).
+
+Forgot password feature via email verification.
+
+Auto-login and redirection after registration, skipping the login page.
+
+Income & Expense Management
+
+Users can input their hourly wages, weekly hours, and automatic monthly income calculation.
+
+Expenses categorized into fixed, variable, and discretionary spending.
+
+Budget alerts notify users when they approach their spending limit.
+
+Budget & Savings Tracker
+
+A budget planner to set monthly/weekly spending limits.
+
+Users receive alerts if they exceed their budget threshold.
+
+"Remaining Budget" indicator to help track spending habits.
+
+Community Features
+
+Users can post financial tips and local deals.
+
+Admins can moderate community posts.
+
+A "Read More Resources" section for financial learning materials.
+
+Admin Panel
+
+Login Credentials: admin@gmail.com / admin_pass
+
+Separate admin login page with role-based access control.
+
+Manage users (add/remove, monitor financial trends).
+
+Approve/Reject community posts and deal submissions.
+
+View detailed financial analytics and system performance reports.
+
+Deals Section
+
+Displays only deals (not coupons).
+
+Admins and users can add/edit/delete deals.
+
+Security & Infrastructure
+
+Storage: The app must support Storage Area Network (SAN) for secure file management.
+
+Database Recovery (Failover Capabilities): Implement a backup system for SQLite database.
+
+Containerization: The app should support Docker for scalable deployment.
+
+Monitoring & Logging: Integrate tools like Prometheus/Grafana/Zabbix for performance tracking.
+
+User Experience Enhancements
+
+Hover effects on "Read More Resources."
+
+Fix cursor navigation in the "Featured Partners" section.
+
+Background images added for all pages for a better visual experience.
+
+Tech Stack
+Frontend: Next.js (TypeScript, Tailwind CSS)
+
+Backend: Next.js API routes with Prisma ORM
+
+Database: SQLite
+
+Authentication: NextAuth.js (with email/password & MFA)
+
+Deployment: Dockerized environment with monitoring tools (Prometheus, Grafana)
+
+How the Admin Interface Will Look Like
+The admin dashboard will have:
+
+User Management: List, add, remove users.
+
+Financial Analytics: Reports on income, expenses, savings trends.
+
+Community Moderation: Approve/reject posts and deals.
+
+System Monitoring: Logs, database health, user activity.
+
+Budget Alerts: Show users exceeding their spending limit.
+
+How to Manage the Admin & Database
+Admin credentials are fixed (admin@gmail.com / admin_pass).
+
+The database is managed with Prisma ORM, using migrations for schema updates.
+
+SQLite backups ensure database recovery in case of failure.
+
+Role-Based Access Control (RBAC) restricts admin/user permissions.
