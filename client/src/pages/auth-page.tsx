@@ -28,6 +28,7 @@ const registerSchema = z.object({
   email: z.string().email("Please enter a valid email"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   fullName: z.string().min(2, "Full name is required"),
+  isAdmin: z.boolean().optional(),
 });
 
 type LoginValues = z.infer<typeof loginSchema>;
@@ -60,6 +61,7 @@ export default function AuthPage() {
       email: "",
       password: "",
       fullName: "",
+      isAdmin: false,
     },
   });
 
@@ -210,6 +212,26 @@ export default function AuthPage() {
                         </FormItem>
                       )}
                     />
+                    <FormField
+                      control={registerForm.control}
+                      name="isAdmin"
+                      render={({ field }) => (
+                        <FormItem className="flex items-center space-x-2 space-y-0">
+                          <FormControl>
+                            <input
+                              type="checkbox"
+                              checked={field.value}
+                              onChange={field.onChange}
+                              className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                            />
+                          </FormControl>
+                          <FormLabel className="text-sm font-medium">
+                            Create as admin user
+                          </FormLabel>
+                        </FormItem>
+                      )}
+                    />
+
                     <Button 
                       type="submit" 
                       className="w-full" 
