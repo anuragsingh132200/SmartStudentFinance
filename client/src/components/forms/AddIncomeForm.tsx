@@ -88,13 +88,14 @@ export function AddIncomeForm({ open, onOpenChange }: AddIncomeFormProps) {
 
   const createIncomeMutation = useMutation({
     mutationFn: async (values: IncomeFormValues) => {
-      // Convert date string to ISO format for the API
-      const formattedData = {
-        ...values,
+      // Omit the calculation fields before sending
+      const { hourlyWage, weeklyHours, calculateFromHours, ...incomeData } = values;
+      
+      const res = await apiRequest("POST", "/api/incomes", {
+        ...incomeData,
         userId: user?.id,
-        date: new Date(values.date).toISOString(),
-      };
-      const res = await apiRequest("POST", "/api/incomes", formattedData);
+        date: new Date(incomeData.date).toISOString(),
+      });
       return await res.json();
     },
     onSuccess: () => {
